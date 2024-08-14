@@ -1,0 +1,8 @@
+.nav-not-active {
+  position: absolute;
+  visibility: hidden;
+}
+
+.nav-active {
+  position: relative;
+}
