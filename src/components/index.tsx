@@ -1,10 +1,3 @@
-// export { default as Image } from "./Image";
-export * as Navbars from "./Navbars";
-export * as Headers from "./Headers";
-export * as Footers from "./Footers";
-export * as Heros from "./Heros";
-export * as LinkBoxes from "./LinkBoxes";
-export * as PictureTexts from "./PictureTexts";
-export * as Standalone from "./Standalone";
-export * as Carousels from "./Carousels";
-export * as Galleries from "./Galleries";
+export { default as CloudinaryImage } from "./CloudinaryImage";
+export { default as SvgComponent } from "./SvgComponent";
+export { default as AnimatedComponent } from "./AnimatedComponent";

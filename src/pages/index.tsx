@@ -1,9 +1,11 @@
-import React, { useState, ComponentType, FC } from "react";
+import React, { useState, ComponentType, FC, useEffect } from "react";
 import type { HeadFC, PageProps } from "gatsby";
-import * as ComponentDir from "../components";
+import * as ComponentDir from "../components/groups";
 import { TiArrowBack } from "react-icons/ti";
 import { allJson } from "../json/json";
 import ErrorBoundary from "../components/ErrorBoundary";
+import apiPost from "../utils/api";
+import { GroupEditor, PortalOverlay } from "../components/app-comps";
 
 // Define a type for the components
 type ComponentMap = {
@@ -49,7 +51,11 @@ const getCurrentUrlState = (): { [key: string]: string } => {
 
 const IndexPage: FC<PageProps> = () => {
   const [canScroll, setCanScroll] = useState(false);
-  const [groupState, setGroupState] = useState<GroupState | "">("");
+  const [scrollHeight, setScrollHeight] = useState<string>("100px");
+  const [groupState, setGroupState] = useState<string>("");
+
+  const [isGroupEditor, setIsGroupEditor] = useState(false);
+
   const [componentState, setComponentState] = useState<string>("");
   const [componentsList, setComponentsList] = useState<ComponentType<any>[]>([]);
 
@@ -71,16 +77,15 @@ const IndexPage: FC<PageProps> = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const urlState = getCurrentUrlState();
 
     if (urlState.group) {
-      setGroupState(urlState.group as GroupState);
+      setGroupState(urlState.group as string);
     }
     if (urlState.component) {
       setComponentState(urlState.component);
     }
-    console.log(components["Navbars"]);
   }, []);
 
   const handleBack = () => {
@@ -112,20 +117,62 @@ const IndexPage: FC<PageProps> = () => {
     }
   };
 
+  const onDeleteComponent = async () => {
+    apiPost("delete-component", { group: groupState, component: componentState });
+  };
+  const onAddComponent = async () => {
+    apiPost("add-component", { group: groupState, component: componentState });
+  };
+
+  const handleScrollHeight = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setScrollHeight(val);
+  };
+
+  const handleClickScrollBtn = (e: React.UIEvent<HTMLButtonElement>) => {
+    setCanScroll((prev) => !prev);
+  };
+
   return (
     <main>
+      {isGroupEditor && (
+        <PortalOverlay overlayClick={() => setIsGroupEditor(false)} className="bg-black absolute top-0 z-[999] opacity-20 w-full h-[100vh]">
+          <GroupEditor group={groupState} onClose={() => setIsGroupEditor(false)} />
+        </PortalOverlay>
+      )}
+
       <div className="px-small py-3xsmall flex justify-between">
         <button onClick={handleBack} className="text-primary hover:text-secondary">
           <TiArrowBack size={"1.7rem"} />
         </button>
-        <button
-          className={`border px-4 py-2 transition w-[150px] ${canScroll ? "bg-green-400 font-semibold text-white rounded" : "bg-red-400 text-black"} `}
-          onClick={() => setCanScroll((prev) => !prev)}
-        >
-          {canScroll ? "Can Scroll" : "Can't Scroll"}
-        </button>
+        <div className="w-full flex justify-around">
+          <div>
+            {groupState && (
+              <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded" onClick={() => setIsGroupEditor(true)}>
+                Open Group
+              </button>
+            )}
+          </div>
+          <div className="inline mr-24 flex gap-2">
+            {componentState && (
+              <>
+                <button onDoubleClick={onDeleteComponent} className={`rounded bg-red-100 hover:bg-red-200 text-stone-700 px-4 py-2 transition `}>
+                  Delete Component
+                </button>
+                <button onDoubleClick={onAddComponent} className={`rounded bg-green-200 hover:bg-green-300 text-stone-700 px-4 py-2 transition `}>
+                  Add Component
+                </button>
+              </>
+            )}
+          </div>
+          {componentState && (
+            <button className={`border px-4 py-2 transition w-[150px] ${canScroll ? "bg-green-400 font-semibold rounded" : "bg-stone-400 text-stone-700"} `} onClick={handleClickScrollBtn}>
+              <input value={scrollHeight} onChange={handleScrollHeight} className="w-full focus:text-left text-center text-white bg-transparent focus:bg-white focus:text-black" />
+            </button>
+          )}
+        </div>
       </div>
-      <div className="flex flex-wrap gap-4 px-4">
+      <div className="flex flex-wrap px-4 max-w-five mx-auto">
         {!groupState &&
           Object.keys(components).map((itemName) => {
             return <PageItem key={itemName} name={itemName} onClick={() => handleGroupSelect(itemName as GroupState)} />;
@@ -137,7 +184,7 @@ const IndexPage: FC<PageProps> = () => {
           })}
       </div>
       {renderComponent()}
-      {canScroll && <div className="w-full h-screen"></div>}
+      {canScroll && componentState && <div className="w-full" style={{ height: scrollHeight }}></div>}
     </main>
   );
 };
@@ -151,7 +198,7 @@ const PageItem: React.FC<PageItemProps> = ({ name, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="h-one px-small min-w-one border border-secondary rounded cursor-pointer hover:scale-110 transition-all bg-accent flex items-center justify-center text-med text-wrap"
+      className="py-1 px-small w-full border-t even:bg-[#aad1ff] bg-blue-300 border-blue-500 cursor-pointer transition-all text-[#253240] text-med text-wrap flex items-start hover:scale-[1.01] hover:bg-blue-300 even:hover:bg-blue-200 hover:border-0 hover:mt-[.09px] active:scale-[1.005]"
     >
       <span>{name}</span>
     </button>

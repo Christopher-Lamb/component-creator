@@ -27,15 +27,13 @@ const OPTIONS: EmblaOptionsType = { loop: true, slidesToScroll: "auto" };
 const Carsouel: React.FC<CarsouelProps> = (props) => {
   const { slidesArray, content, arrowsBool, autoPlayBool, starSize, ...otherCSS } = props;
 
-  const { newCSSMap, namingMap: css } = generateCSSMaps(otherCSS);
-  const cssString = getCSS(newCSSMap);
+  const { cssString, css } = getCSS(otherCSS);
 
   const html = addClassesToElements(content, { h1: css["h1Class"], h2: css["h2Class"], h3: css["h3Class"], p: css["pClass"], liClass: css["liClass"], a: css["aClass"] });
 
-
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS, [Autoplay({ playOnInit: autoPlayBool, delay: 12000 })]);
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
-  
+
   //parseArray
   const { array: slides } = slidesArray;
 

@@ -1,3 +1,10 @@
 export { default as BasicNavbar } from "./BasicNavbar/BasicNavbar";
 export { default as LambNavbar } from "./LambNavbar/LambNavbar";
 export { default as LambNavbar2 } from "./LambNavbar2/LambNavbar2";
+export { default as Navbar } from "./Navbar/Navbar";
+export { default as SimpleNavbar } from "./SimpleNavbar/SimpleNavbar";
+export { default as SimpleNavCustomLinks } from "./SimpleNavCustomLinks/SimpleNavCustomLinks";
+export { default as MainNavbar } from "./MainNavbar/MainNavbar";
+export { default as MobileNavbar } from "./MobileNavbar/MobileNavbar";
+export { default as FloatingNavbar } from "./FloatingNavbar/FloatingNavbar";
+export { default as MobileFloatingNavbar } from "./MobileFloatingNavbar/MobileFloatingNavbar";

@@ -1,0 +1,51 @@
+.burger-container {
+  display: inline-block;
+  cursor: pointer;
+  z-index: 5;
+  /* padding: 3px 6px; */
+  /* border-radius: 10%; */
+}
+
+.burger-bar-1,
+.burger-bar-2,
+.burger-bar-3 {
+  /* width: 35px; */
+  /* height: 5px; */
+  /* background-color: white; */
+  /* margin: 6px 0; */
+  transition: 0.4s;
+}
+
+.burger-change .burger-bar-1 {
+  /* -webkit-transform: rotate(-405deg) translate(-9px, 6px);
+  transform: rotate(-405deg) translate(-9px, 6px);*/
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.burger-change .burger-bar-2 {
+  opacity: 0;
+  /* transform: rotate(-1000deg) translate(0px, 0px); */
+}
+
+.burger-change .burger-bar-3 {
+  /* -webkit-transform: rotate(405deg) translate(-8px, -8px);
+  transform: rotate(405deg) translate(-8px, -8px); */
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
+
+.burger-text {
+  /* font-size: 25px; */
+  /* margin-left: 10px; */
+  /* color: white; */
+  cursor: pointer;
+  /* display: flex; */
+  /* align-items: center; */
+}
+
+.burger-grid {
+  cursor: pointer;
+  /* display: flex; */
+  /* flex-direction: column; */
+}

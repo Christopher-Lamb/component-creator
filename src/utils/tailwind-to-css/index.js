@@ -1,5 +1,5 @@
-const { getCSS } = require("./contructor");
-const { addClassesToElements } = require("./addClassesToElements");
+const { getCSS } = require("./utils/constructor");
+const { addClassesToElements } = require("./utils/addClassesToElements");
 let lastTime = 0;
 let counter = 0;
 
@@ -16,12 +16,18 @@ function generateUniqueId(string) {
 const generateCSSMaps = (cssMap) => {
   let newCSSMap = {};
   let namingMap = {};
+  let cssString = "";
+
   Object.entries(cssMap).forEach(([key, value]) => {
     const newName = generateUniqueId(key);
     namingMap[key] = newName;
+
     newCSSMap[newName] = value;
   });
-  return { newCSSMap, namingMap };
+
+  cssString = getCSS(newCSSMap);
+
+  return { newCSSMap, namingMap, cssString };
 };
 
 module.exports = {

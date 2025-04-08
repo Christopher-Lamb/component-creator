@@ -1,11 +1,7 @@
 import { Link } from "gatsby";
 import React from "react";
 import CloudinaryImage from "../../CloudinaryImage";
-const {
-  getCSS,
-  generateCSSMaps,
-  addClassesToElements,
-} = require("../../../utils/tailwind-to-css/");
+const { getCSS, generateCSSMaps } = require("../../../utils/tailwind-to-css/");
 
 interface BasicHeaderProps {
   name: string;
@@ -69,22 +65,13 @@ const getPath = (path: string) => {
 };
 
 const BasicHeader: React.FC<BasicHeaderProps> = () => {
-  const {
-    autoBreadcrumbsBool,
-    bgImageBool,
-    breadcrumbArray,
-    img,
-    name,
-    ...otherCSS
-  } = props;
+  const { autoBreadcrumbsBool, bgImageBool, breadcrumbArray, img, name, ...otherCSS } = props;
 
-  const { newCSSMap, namingMap: css } = generateCSSMaps(otherCSS);
-  const cssString = getCSS(newCSSMap);
+  const { cssString, css } = getCSS(otherCSS);
 
   const { array: breadcrumbs } = breadcrumbArray;
 
   const paths = "/air-conditioning/tips/blog".split("/");
-  console.log("HERE ==>", window.location.pathname, "arr:", paths);
 
   return (
     <header className={css["containerClass"]}>
@@ -107,9 +94,7 @@ const BasicHeader: React.FC<BasicHeaderProps> = () => {
                         {kebabCaseToTitleCase(path)}
                       </Link>
                     ) : (
-                      <span className={css["disabledLinkClass"]}>
-                        {kebabCaseToTitleCase(path)}
-                      </span>
+                      <span className={css["disabledLinkClass"]}>{kebabCaseToTitleCase(path)}</span>
                     )}
                   </>
                 );

@@ -2,12 +2,12 @@ export const routes = {
   navbar: [
     {
       id: "0d0527a6-fc1c-4fa3-adad-0ba1f5232577",
-      name: "Page 1",
-      path: "/page-1",
+      name: "About",
+      path: "#about",
       subpaths: [
         {
           id: "48ff9d8e-118f-4d13-ae23-a91d57da3d83",
-          name: "Page 1 1 this is air conditioning",
+          name: "Page 1",
           path: "/page-1/page-1",
           subpaths: [],
         },
@@ -27,8 +27,8 @@ export const routes = {
     },
     {
       id: "5dff8a00-1c8a-4ceb-90f4-a8f646e6f447",
-      name: "Page 2",
-      path: "/page-2",
+      name: "Menu",
+      path: "#menu",
       subpaths: [
         {
           id: "d060ad54-9631-4c08-baaa-352e6f6ef84c",
@@ -49,36 +49,6 @@ export const routes = {
           subpaths: [],
         },
       ],
-    },
-    {
-      id: "222a1a9c-085d-4772-acf5-3e8ac6e50dde",
-      name: "Page 3",
-      path: "/page-3",
-      subpaths: [],
-    },
-    {
-      id: "d8acdbe5-d82a-4916-aada-d0dd4a29d2c1",
-      name: "Page 4",
-      path: "/page-4",
-      subpaths: [],
-    },
-    {
-      id: "1afa5a32-667b-41d4-b33c-026b4e56e8fa",
-      name: "Page 5",
-      path: "/page-5",
-      subpaths: [],
-    },
-    {
-      id: "9b32b677-36b2-40f5-9a9b-82e8e9e1df1d",
-      name: "Page 6",
-      path: "/page-6",
-      subpaths: [],
-    },
-    {
-      id: "9b32b677-36b2-40f5-9a9b-82e8e9e1df1d",
-      name: "Page 7",
-      path: "/page-7",
-      subpaths: [],
     },
     {
       id: "9b32b677-36b2-40f5-9a9b-82e8e9e1df1d",
@@ -111,6 +81,36 @@ export const routes = {
         },
       ],
     },
+    // {
+    //   id: "222a1a9c-085d-4772-acf5-3e8ac6e50dde",
+    //   name: "Page 3",
+    //   path: "/page-3",
+    //   subpaths: [],
+    // },
+    // {
+    //   id: "d8acdbe5-d82a-4916-aada-d0dd4a29d2c1",
+    //   name: "Page 4",
+    //   path: "/page-4",
+    //   subpaths: [],
+    // },
+    // {
+    //   id: "1afa5a32-667b-41d4-b33c-026b4e56e8fa",
+    //   name: "Page 5",
+    //   path: "/page-5",
+    //   subpaths: [],
+    // },
+    // {
+    //   id: "9b32b677-36b2-40f5-9a9b-82e8e9e1df1d",
+    //   name: "Page 6",
+    //   path: "/page-6",
+    //   subpaths: [],
+    // },
+    // {
+    //   id: "9b32b677-36b2-40f5-9a9b-82e8e9e1df1d",
+    //   name: "Page 7",
+    //   path: "/page-7",
+    //   subpaths: [],
+    // },
   ],
   quickLinks: [],
   faq: [],
