@@ -19,7 +19,7 @@ interface ApiError {
   details?: any;
 }
 
-const backendURL = 'http://localhost:3003/api'
+const backendURL = "http://localhost:3003/api";
 
 /**
  * Sends a POST request to the backend API.
@@ -52,4 +52,33 @@ const apiPost = async <T>(url: string, data: Record<string, any>, config: AxiosR
   }
 };
 
-export default apiPost;
+/**
+ * Sends a GET request to the backend API.
+ * @param url - The endpoint URL.
+ * @param config - Optional axios config (headers, params, etc.).
+ * @returns The API response data or throws an error.
+ */
+const apiGet = async <T>(url: string, config: AxiosRequestConfig = {}): Promise<T> => {
+  try {
+    const newUrl = `${backendURL}/${url}`;
+    const response: AxiosResponse<T> = await axios.get(newUrl, config);
+
+    console.log(response);
+
+    if (response.status >= 200 && response.status < 300) {
+      return response.data as T;
+    }
+
+    throw new Error("Unexpected API response");
+  } catch (error: any) {
+    console.error(`API GET Error [${url}]:`, error.response?.data || error.message);
+
+    throw {
+      message: error.response?.data?.error || "Request failed",
+      status: error.response?.status || 500,
+      details: error.response?.data || null,
+    } as ApiError;
+  }
+};
+
+export { apiPost, apiGet };

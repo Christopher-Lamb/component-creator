@@ -2,10 +2,13 @@ import React, { useState, ComponentType, FC, useEffect } from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import * as ComponentDir from "../components/groups";
 import { TiArrowBack } from "react-icons/ti";
+import { ImOmega } from "react-icons/im";
+import { TbFishHook } from "react-icons/tb";
+
 import { allJson } from "../json/json";
 import ErrorBoundary from "../components/ErrorBoundary";
-import apiPost from "../utils/api";
-import { GroupEditor, PortalOverlay } from "../components/app-comps";
+import { apiPost } from "../utils/api";
+import { GroupEditor, PortalOverlay, OmniCompEditor, HooksEditor } from "../components/app-comps";
 
 // Define a type for the components
 type ComponentMap = {
@@ -55,6 +58,8 @@ const IndexPage: FC<PageProps> = () => {
   const [groupState, setGroupState] = useState<string>("");
 
   const [isGroupEditor, setIsGroupEditor] = useState(false);
+  const [isOmniCompEditor, setIsOmniCompEditor] = useState(false);
+  const [isHooksEditor, setIsHooksEditor] = useState(false);
 
   const [componentState, setComponentState] = useState<string>("");
   const [componentsList, setComponentsList] = useState<ComponentType<any>[]>([]);
@@ -134,17 +139,37 @@ const IndexPage: FC<PageProps> = () => {
   };
 
   return (
-    <main>
+    <main className="relative">
       {isGroupEditor && (
         <PortalOverlay overlayClick={() => setIsGroupEditor(false)} className="bg-black absolute top-0 z-[999] opacity-20 w-full h-[100vh]">
           <GroupEditor group={groupState} onClose={() => setIsGroupEditor(false)} />
         </PortalOverlay>
       )}
 
+      {isOmniCompEditor && (
+        <PortalOverlay overlayClick={() => setIsOmniCompEditor(false)} className="bg-black absolute top-0 z-[999] opacity-20 w-full h-[100vh]">
+          <OmniCompEditor onClose={() => setIsOmniCompEditor(false)} />
+        </PortalOverlay>
+      )}
+      {isHooksEditor && (
+        <PortalOverlay overlayClick={() => setIsHooksEditor(false)} className="bg-black absolute top-0 z-[999] opacity-20 w-full h-[100vh]">
+          <HooksEditor onClose={() => setIsHooksEditor(false)} />
+        </PortalOverlay>
+      )}
+
       <div className="px-small py-3xsmall flex justify-between">
-        <button onClick={handleBack} className="text-primary hover:text-secondary">
-          <TiArrowBack size={"1.7rem"} />
-        </button>
+        <div className="flex gap-2">
+          <button onClick={handleBack} className="text-primary hover:text-secondary">
+            <TiArrowBack size={"1.7rem"} />
+          </button>
+          <button className="hover:scale-105" onClick={() => setIsOmniCompEditor(true)} title="Omni Components">
+            <ImOmega size={"1.3rem"} />
+          </button>
+          <button className="hover:scale-105" onClick={() => setIsHooksEditor(true)} title="Hooks">
+            <TbFishHook size={"1.7rem"} />
+          </button>
+        </div>
+
         <div className="w-full flex justify-around">
           <div>
             {groupState && (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import apiPost from "../../../utils/api";
+import { apiPost } from "../../../utils/api";
 import { DraggableList, DragProvider, useDragContext } from "./";
 interface GroupEditorProps {
   group: string;
