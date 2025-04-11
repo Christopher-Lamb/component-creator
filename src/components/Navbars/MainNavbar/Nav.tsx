@@ -42,7 +42,7 @@ const Nav: React.FC<NavProps> = (props) => {
               <Link to={path} className={css["linkClass"]}>
                 {name}
               </Link>
-              <div ref={ref} className={`absolute overflow-hidden ${isOpen ? "z-[9999]" : "z-0"}`}>
+              <div ref={ref} className={`absolute overflow-hidden ${isOpen ? "z-[9002]" : "z-0"}`}>
                 <div className={css["sublinkContainerClass"]}>
                   {subpaths.map(({ name, path }: any, i: number) => {
                     return (

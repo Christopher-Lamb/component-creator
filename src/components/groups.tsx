@@ -12,3 +12,4 @@ export * as HowItWorks from "./HowItWorks";
 export * as Menus from "./Menus";
 export * as Cards from "./Cards";
 export * as Forms from "./Forms";
+export * as Texts from "./Texts";

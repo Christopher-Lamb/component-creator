@@ -19,13 +19,14 @@ interface LambHeroProps {
  *
  * @param {LambHeroProps} props - The props for the component.
  */
-const props = {
+const testProps = {
   containerClass: "relative h-[630px] lg:h-[700px] w-full overflow-hidden bg-blue-100",
-  imgBg: "house.jpg",
+  img: "house.jpg",
   bgImageClass: "absolute object-cover w-full top-[-20px] lg:top-[-300px] h-[700px] lg:h-[1000px]",
   textContainerClass: "relative text-white max-w-four w-full flex flex-col items-center",
   animationClass: "",
   invisibleBool: true,
+  htmlContainerClass: "",
   content: "",
   h1Class: "kanit weight-500 text-center text-large lg:text-one",
   h2Class: "text-small18 lg:text-med px-4 md:px-0 mt-2 text-center max-w-four",
@@ -45,11 +46,12 @@ const props = {
   },
 };
 
-const LambHero: React.FC<LambHeroProps> = () => {
-  const { imgBg, content, invisibleBool, buttonsArray, ...otherCSS } = props;
+const LambHero: React.FC<LambHeroProps> = (props) => {
+  const {} = props;
+  const { img, content, invisibleBool, buttonsArray, ...otherCSS } = testProps;
 
   const { cssString, css } = getCSS(otherCSS);
-  const html = addClassesToElements(content, { h1: css["h1Class"], h2: css["h2Class"], h3: css["h3Class"], p: css["pClass"] });
+  const html = addClassesToElements(content, css);
 
   const { array: buttons } = buttonsArray;
 
@@ -72,13 +74,15 @@ const LambHero: React.FC<LambHeroProps> = () => {
       <style dangerouslySetInnerHTML={{ __html: cssString || "" }} />
       <div id="LambHeroBG" className="absolute w-full h-full z-[1]">
         {/* bgImageClass */}
-        <CloudinaryImage publicId={imgBg} className={css["bgImageClass"]} />
+        <CloudinaryImage publicId={img} className={css["bgImageClass"]} />
       </div>
       <div className="w-full h-full relative z-[3] flex items-center justify-center">
         {/* Hero content ( this is where the animation would wrap ) */}
         {/* textContainerClass */}
         <div className={css["textContainerClass"]}>
-          <AnimatedComponent className="w-full h-full" animationClassName={css["animationClass"]} invisible={invisibleBool} htmlContent={html} />
+          <AnimatedComponent className="w-full h-full" animationClassName={css["animationClass"]} invisible={invisibleBool}>
+            <div className={css["htmlContainerClass"]} dangerouslySetInnerHTML={{ __html: html }}></div>
+          </AnimatedComponent>
 
           {/* buttonContainerClass */}
           {buttons.length > 0 && (

@@ -50,7 +50,7 @@ const Nav: React.FC<NavProps> = (props) => {
                   </div>
                 )}
               </div>
-              <div ref={ref} className={`relative overflow-hidden w-full  ${isOpen ? "z-[9999]" : "z-0"}`}>
+              <div ref={ref} className={`relative overflow-hidden w-full  ${isOpen ? "z-[9006]" : "z-0"}`}>
                 {/* <div className={`h-full w-full transition flex flex-col `}>
                   <div className="h-20 bg-purple-600 w-full"></div>
                 </div> */}

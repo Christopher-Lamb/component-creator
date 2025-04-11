@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCSS } from "../";
 import "./Burger.css";
 
 interface BurgerProps {
-  onClick: () => void;
+  onClick: (val: boolean) => void;
   className?: string;
   text?: React.ReactNode;
+  isBurger?: boolean;
 }
 
 const Burger: React.FC<BurgerProps> = (props) => {
-  const { onClick, text, ...otherCSS } = props;
-  const [isActive, setIsActive] = useState(false); // Local state for animation
+  const { onClick, text, isBurger = false, ...otherCSS } = props;
+  const [isActive, setIsActive] = useState(isBurger); // Local state for animation
 
   const { cssString, css } = getCSS(otherCSS);
   const burgerToggle = () => {
     setIsActive((prev) => !prev); // Toggle state
-    onClick();
+    onClick(!isActive);
   };
+
+  useEffect(() => {
+    setIsActive(isBurger);
+  }, [isBurger]);
 
   return (
     <div className={css["containerClass"]}>

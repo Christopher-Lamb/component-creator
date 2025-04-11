@@ -1,5 +1,8 @@
 const { getSize } = require("./sizing");
 
+
+// Not tolerant of spaces in brackets
+// Ex: scale-[1, 2] 
 const getScale = (arr) => {
   // Pop off leading "scale" string
   arr.splice(0, 1);

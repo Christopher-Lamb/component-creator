@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCSS, Text, ImageLogo, ImageLogoText, Content, Nav, NavCustom } from ".";
+import { getCSS, NavText, ImageLogo, ImageLogoText, NavContent, Nav, NavCustom } from ".";
 
 interface FloatingNavbarProps {
   routes: any;
@@ -7,11 +7,11 @@ interface FloatingNavbarProps {
 
 const testProps = {
   mainClass: "w-full",
-  containerClass: "fixed translate-y-[-100%] top-0 w-full z-9000",
+  containerClass: "fixed translate-y-[-100%] top-0 w-full z-9003",
   containerAnimationClass: "translate-y-[0px] transition duration-400",
-  scrollHeight: "200",
+  scrollHeight: "100",
   wrapperClass: "bg-stone-500 h-20 max-w-[1200px] grid grid-cols-2 mx-auto",
-  leftContainerClass: "h-full px-4",
+  leftContainerClass: "h-full",
   leftArray: {
     objects: {
       text: { type: "text", containerClass: "", textClass: "", text: "" },
@@ -23,16 +23,27 @@ const testProps = {
   rightArray: {
     objects: {
       content: { type: "content", containerClass: "", htmlContainerClass: "", content: "", pClass: "", aClass: "" },
-      nav: { type: "nav", containerClass: "", linkContainerClass: "", linkClass: "", sublinkContainerClass: "h-full flex flex-col", sublinkClass: "", timing: ".1s" },
+      nav: {
+        type: "nav",
+        containerClass: "h-full",
+        navClass: "w-full flex gap-3 h-full items-end",
+        linkClass: "block text-white font-semibold py-1",
+        sublinkContainerClass: "h-full border-b border-x flex flex-col min-w-40",
+        sublinkClass: "pl-1 pb-1 hover:bg-stone-300 px-2 ",
+        timing: "0.1s",
+      },
       "nav-custom": {
         type: "nav-custom",
-        containerClass: "",
-        linkContainerClass: "",
-        linkClass: "",
-        sublinkContainerClass: "h-full flex flex-col",
-        sublinkClass: "",
-        routesArray: { objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } }, array: [] },
-        timing: ".1s",
+        containerClass: "h-full",
+        navClass: "w-full flex gap-3 h-full items-end",
+        linkClass: "block text-white font-semibold py-1",
+        sublinkContainerClass: "h-full flex flex-col bg-blue-300 min-w-40",
+        sublinkClass: "pl-1 pb-1 hover:bg-stone-300",
+        routesArray: {
+          objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } },
+          array: [],
+        },
+        timing: ".3s",
       },
     },
     array: [
@@ -45,32 +56,6 @@ const testProps = {
         sublinkClass: "pl-1 pb-1 hover:bg-stone-300 px-2 ",
         timing: "0.1s",
       },
-      // {
-      //   type: "nav-custom",
-      //   containerClass: "h-full",
-      //   navClass: "w-full flex gap-3 h-full items-end",
-      //   linkClass: "block text-white font-semibold py-1",
-      //   sublinkContainerClass: "h-full flex flex-col bg-blue-300 w-30",
-      //   sublinkClass: "pl-1 pb-1 hover:bg-stone-300",
-      //   routesArray: {
-      //     objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } },
-      //     array: [
-      //       {
-      //         name: "Homeski",
-      //         path: "/homski",
-      //         sublinkArray: {
-      //           objects: { sublink: { name: "", path: "" } },
-      //           array: [
-      //             { name: "One", path: "/one" },
-      //             { name: "Two", path: "/two" },
-      //             { name: "Three", path: "/three" },
-      //           ],
-      //         },
-      //       },
-      //     ],
-      //   },
-      //   timing: ".3s",
-      // },
     ],
   },
 };
@@ -104,17 +89,17 @@ const FloatingNavbar: React.FC<FloatingNavbarProps> = (props) => {
       <div className={`${css["containerClass"]} ${visible ? css["containerAnimationClass"] : ""}`}>
         <div className={css["wrapperClass"]}>
           <div className={css["leftContainerClass"]}>
-            {leftElements.map((elProps: any) => {
+            {leftElements.map((elProps: any, i: number) => {
               const { type, ...other } = elProps;
               switch (type) {
                 case "text":
-                  return <Text {...other} />;
+                  return <NavText key={i} {...other} />;
                 case "image":
-                  return <ImageLogo {...other} />;
+                  return <ImageLogo key={i} {...other} />;
                 case "imageText":
-                  return <ImageLogoText {...other} />;
+                  return <ImageLogoText key={i} {...other} />;
                 default:
-                  return <></>;
+                  return;
               }
             })}
           </div>
@@ -123,13 +108,13 @@ const FloatingNavbar: React.FC<FloatingNavbarProps> = (props) => {
               const { type, ...other } = elProps;
               switch (type) {
                 case "content":
-                  return <Content {...other} key={i} />;
+                  return <NavContent key={i} {...other} />;
                 case "nav":
-                  return <Nav {...{ routes, ...other }} key={i} />;
+                  return <Nav key={i} {...{ routes, ...other }} />;
                 case "nav-custom":
-                  return <NavCustom {...other} key={i} />;
+                  return <NavCustom key={i} {...other}  />;
                 default:
-                  return <></>;
+                  return;
               }
             })}
           </div>

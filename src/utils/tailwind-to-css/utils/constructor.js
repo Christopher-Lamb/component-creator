@@ -247,7 +247,7 @@ module.exports = {
 
 // console.clear();
 // console.log("tailwind-to-css git:(master)");
-// const { cssString: css, css: cssObj } = getCSS({ testClass: "break-normal animate-icon-shake" });
+// const { cssString: css, css: cssObj } = getCSS({ testClass: "scale-[0.2,0.1]" });
 // console.log("________________________________\ncssString");
 // console.log(css);
 // console.log("Css Obj:\n\t", cssObj);

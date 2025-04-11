@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getCSS, Text, ImageLogo, ImageLogoText, Nav, Burger, useAnimatedDropdown } from ".";
+import { getCSS, NavText, ImageLogo, ImageLogoText, Nav, Burger, useAnimatedDropdown, useOutsideHook, NavCustom } from ".";
 
 interface MobileNavbarProps {
   routes: any;
@@ -39,7 +39,38 @@ const testProps = {
     ],
   },
   navArray: {
-    objects: { nav: { type: "nav", containerClass: "", navClass: "", linkClass: "", sublinkContainerClass: "", sublinkClass: "", arrowContClass: "", arrowClass: "", timing: ".3s" } },
+    objects: {
+      nav: {
+        type: "nav",
+        containerClass: "w-full max-w-[1200px] mx-auto",
+        navClass: "",
+        linkContClass: "relative",
+        linkWrapClass: "flex border-b-1",
+        linkClass: "block w-full px-2 py-1 hover:bg-stone-50",
+        sublinkContainerClass: "",
+        sublinkClass: "block w-full pl-2 border-b-1 py-1 bg-stone-50 hover:bg-stone-100",
+        arrowContClass: "h-auto flex items-center px-1",
+        arrowClass: "size-6",
+        timing: ".3s",
+      },
+      "nav-custom": {
+        type: "nav-custom",
+        containerClass: "w-full max-w-[1200px] mx-auto",
+        navClass: "",
+        linkContClass: "relative",
+        linkWrapClass: "flex border-b-1",
+        linkClass: "block w-full px-2 py-1 hover:bg-stone-50",
+        sublinkContainerClass: "",
+        sublinkClass: "block w-full pl-2 border-b-1 py-1 bg-stone-50 hover:bg-stone-100",
+        arrowContClass: "h-auto flex items-center px-1",
+        arrowClass: "size-6",
+        routesArray: {
+          objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } },
+          array: [],
+        },
+        timing: ".3s",
+      },
+    },
     array: [
       {
         type: "nav",
@@ -59,22 +90,31 @@ const testProps = {
 };
 
 const MobileNavbar: React.FC<MobileNavbarProps> = (props) => {
+  const [burgerState, setBurgerState] = useState(false);
   const { routes } = props;
   const { elementsArray, navArray, ...otherCSS } = testProps;
-  const [isDropdown, setIsDropdown] = useState<boolean>(false);
-  const { ref, toggle, isOpen, open, close } = useAnimatedDropdown(".3s");
+
+  const { ref, isOpen, open, close } = useAnimatedDropdown(".3s");
+  
+  const handleOutsideClick = () => {
+    setBurgerState(false);
+    close();
+  };
+  
+  const outsideRef = useOutsideHook(handleOutsideClick);
   const { cssString, css } = getCSS(otherCSS);
 
   const { array: elements } = elementsArray as any;
 
   const { array: navItems } = navArray as any;
 
-  const handleBurgerClick = () => {
+  const handleBurgerClick = (val: boolean) => {
+    setBurgerState(val);
     isOpen ? close() : open();
   };
 
   return (
-    <div className={css["mainClass"]}>
+    <div ref={outsideRef} className={css["mainClass"]}>
       <style type="text/css" dangerouslySetInnerHTML={{ __html: cssString || "" }} />
       <div className={css["containerClass"]}>
         <div className={css["wrapperClass"]}>
@@ -84,13 +124,13 @@ const MobileNavbar: React.FC<MobileNavbarProps> = (props) => {
                 const { type, ...other } = elProps;
                 switch (type) {
                   case "text":
-                    return <Text {...other} key={i * 20} />;
+                    return <NavText {...other} key={i} />;
                   case "image":
                     return <ImageLogo {...other} key={i} />;
                   case "imageText":
                     return <ImageLogoText {...other} key={i} />;
                   case "burger":
-                    return <Burger {...other} key={i} onClick={handleBurgerClick} />;
+                    return <Burger {...other} key={i} onClick={handleBurgerClick} isBurger={burgerState} />;
                   default:
                     return <></>;
                 }
@@ -99,13 +139,17 @@ const MobileNavbar: React.FC<MobileNavbarProps> = (props) => {
           )}
         </div>
       </div>
-      <div ref={ref} className={`absolute overflow-hidden w-full  ${isOpen ? "z-[9999]" : "z-0"}`}>
+      <div ref={ref} className={`absolute overflow-hidden w-full  ${isOpen ? "z-[9002]" : "z-0"}`}>
         <div className={css["navItemsContainer"]}>
           {navItems.map((itemProps: any, i: number) => {
             const { type, ...other } = itemProps;
             switch (type) {
               case "nav":
-                return <Nav {...{ routes, ...other }} key={i} />;
+                return <Nav key={i} {...{ routes, ...other }} />;
+              case "nav-custom":
+                return <NavCustom key={i} {...other} />;
+              default:
+                return;
             }
           })}
         </div>

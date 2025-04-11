@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { getCSS, Text, ImageLogo, ImageLogoText, Nav, Burger, useAnimatedDropdown } from ".";
+import { getCSS, NavText, NavCustom, ImageLogo, ImageLogoText, Nav, Burger, useAnimatedDropdown } from ".";
 
 interface MobileFloatingNavbarProps {
   routes: any;
 }
 
 const testProps = {
-  mainClass: "fixed translate-y-[-100%] top-0 w-full",
+  mainClass: "fixed translate-y-[-100%] top-0 w-full z-9004",
   containerClass: "",
   mainAnimationClass: "translate-y-[0px] transition duration-400",
   scrollHeight: "100",
@@ -19,11 +19,11 @@ const testProps = {
       imageText: { type: "imageText", containerClass: "", logoClass: "", imgLogo: "", textClass: "", text: "" },
       burger: {
         type: "burger",
-        containerClass: "flex items-center justify-end pr-4",
+        containerClass: "flex items-center justify-end",
         burgerGridClass: "flex flex-col",
         burgerContainerClass: "py-[3px] px-[6px] rounded-[10%]",
         burgerBarClass: "w-[35px] h-[5px] my-[6px] bg-white",
-        textClass: "flex items-center text-[25px] ml-[10px] ",
+        textClass: "flex items-center text-[25px] ml-[10px]",
         text: "",
       },
     },
@@ -41,7 +41,38 @@ const testProps = {
     ],
   },
   navArray: {
-    objects: { nav: { type: "nav", containerClass: "", navClass: "", linkClass: "", sublinkContainerClass: "", sublinkClass: "", arrowContClass: "", arrowClass: "", timing: ".3s" } },
+    objects: {
+      nav: {
+        type: "nav",
+        containerClass: "w-full max-w-[1200px] mx-auto",
+        navClass: "",
+        linkContClass: "relative",
+        linkWrapClass: "flex border-b-1",
+        linkClass: "block w-full px-2 py-1 hover:bg-stone-50",
+        sublinkContainerClass: "",
+        sublinkClass: "block w-full pl-2 border-b-1 py-1 bg-stone-50 hover:bg-stone-100",
+        arrowContClass: "h-auto flex items-center px-1",
+        arrowClass: "size-6",
+        timing: ".3s",
+      },
+      "nav-custom": {
+        type: "nav-custom",
+        containerClass: "w-full max-w-[1200px] mx-auto",
+        navClass: "",
+        linkContClass: "relative",
+        linkWrapClass: "flex border-b-1",
+        linkClass: "block w-full px-2 py-1 hover:bg-stone-50",
+        sublinkContainerClass: "",
+        sublinkClass: "block w-full pl-2 border-b-1 py-1 bg-stone-50 hover:bg-stone-100",
+        arrowContClass: "h-auto flex items-center px-1",
+        arrowClass: "size-6",
+        routesArray: {
+          objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } },
+          array: [],
+        },
+        timing: ".3s",
+      },
+    },
     array: [
       {
         type: "nav",
@@ -111,7 +142,7 @@ const MobileFloatingNavbar: React.FC<MobileFloatingNavbarProps> = (props) => {
                   const { type, ...other } = elProps;
                   switch (type) {
                     case "text":
-                      return <Text {...other} key={i * 20} />;
+                      return <NavText {...other} key={i} />;
                     case "image":
                       return <ImageLogo {...other} key={i} />;
                     case "imageText":
@@ -126,13 +157,15 @@ const MobileFloatingNavbar: React.FC<MobileFloatingNavbarProps> = (props) => {
             )}
           </div>
         </div>
-        <div ref={ref} className={`absolute overflow-hidden w-full  ${isOpen ? "z-[9999]" : "z-0"}`}>
+        <div ref={ref} className={`absolute overflow-hidden w-full  ${isOpen ? "z-[9005]" : "z-0"}`}>
           <div className={css["navItemsContainer"]}>
             {navItems.map((itemProps: any, i: number) => {
               const { type, ...other } = itemProps;
               switch (type) {
                 case "nav":
-                  return <Nav {...{ routes, ...other }} key={i} />;
+                  return <Nav key={i} {...{ routes, ...other }} />;
+                case "nav-custom":
+                  return <NavCustom key={i} {...other} />;
               }
             })}
           </div>

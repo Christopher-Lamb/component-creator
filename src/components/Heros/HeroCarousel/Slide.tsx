@@ -37,7 +37,7 @@ const Slide: React.FC<SlideProps> = (props) => {
     <>
       <style type="text/css" dangerouslySetInnerHTML={{ __html: cssString || "" }} />
       <div className={css["containerClass"]}>
-        <div id="heroBG" className="absolute w-full h-full">
+        <div className="absolute w-full h-full">
           {/* bgImageClass */}
           <CloudinaryImage publicId={img} className={css["imageClass"]} />
         </div>

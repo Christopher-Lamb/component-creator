@@ -1,7 +1,7 @@
 import React from "react";
 import { addClassesToElements, getCSS } from ".";
 
-interface ContentProps {
+interface NavContentProps {
   containerClass: string;
   htmlContainerClass: string;
   content: string;
@@ -9,18 +9,8 @@ interface ContentProps {
   aClass: string;
 }
 
-/**
- * Content Component
- *
- * Description
- *
- * Props:
- * -
- *
- * @param {ContentProps} props - The props for the component.
- */
 
-const Content: React.FC<ContentProps> = (props) => {
+const NavContent: React.FC<NavContentProps> = (props) => {
   const { content, ...otherProps } = props;
 
   const { cssString, css } = getCSS(otherProps);
@@ -34,4 +24,4 @@ const Content: React.FC<ContentProps> = (props) => {
   );
 };
 
-export default Content;
+export default NavContent;

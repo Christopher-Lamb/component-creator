@@ -1,12 +1,11 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image";
 
 interface CloudinaryImageProps {
   publicId: string;
-  objectFit?: CSSProperties["objectFit"];
-  objectPosition?: CSSProperties["objectPosition"];
   className?: string;
+  alt?: string;
 }
 
 interface CloudinaryNode {
@@ -18,9 +17,20 @@ interface LocalNode {
   relativePath: string;
 }
 
-const CloudinaryImage: React.FC<CloudinaryImageProps> = ({ publicId, objectFit, objectPosition, className }) => {
+const CloudinaryImage: React.FC<CloudinaryImageProps> = ({ publicId, className, alt }) => {
   const data = useStaticQuery(graphql`
     query {
+      site {
+        siteMetadata {
+          images
+        }
+      }
+      allCloudinaryMedia {
+        nodes {
+          gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, secure: true)
+          public_id
+        }
+      }
       allFile(filter: { sourceInstanceName: { eq: "images" } }) {
         nodes {
           relativePath
@@ -33,17 +43,26 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({ publicId, objectFit, 
   `);
 
   // Filter the image based on publicId
+  const isLocal = data.site.siteMetadata.images === "local" ? true : false;
   let image: IGatsbyImageData | null | undefined = null;
-  const imageNode = data.allFile.nodes.find((node: LocalNode) => {
-    return node.relativePath === publicId;
-  });
-  image = imageNode ? getImage(imageNode.childImageSharp.gatsbyImageData) : null;
+  if (isLocal) {
+    const hasExtension = /\.(png|jpe?g|webp|gif|svg)$/i.test(publicId);
+    const finalPath = hasExtension ? publicId : `${publicId}.png`;
 
-  if (!image) {
-    return <p>No image found for {publicId}</p>;
+    const imageNode = data.allFile.nodes.find((node: LocalNode) => {
+      return node.relativePath === finalPath;
+    });
+    image = imageNode ? getImage(imageNode.childImageSharp.gatsbyImageData) : null;
+  } else {
+    const node = data.allCloudinaryMedia.nodes.find((node: CloudinaryNode) => node.public_id === publicId);
+    image = node ? getImage(node.gatsbyImageData) : null;
   }
 
-  return <GatsbyImage image={image} alt={`image with public_id: ${publicId}`} className={className || ""} objectFit={objectFit} objectPosition={objectPosition} loading="lazy" />;
+  if (!image) {
+    return <p className={className || ""}>No image found for {publicId}</p>;
+  }
+
+  return <GatsbyImage image={image} alt={alt || `Cloudinary image with public_id: ${publicId}`} loading="lazy" className={className || ""} />;
 };
 
 export default CloudinaryImage;

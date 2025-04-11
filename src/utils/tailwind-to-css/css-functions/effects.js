@@ -42,9 +42,7 @@ const getShadow = (arr) => {
   }
 
   // Check if it's a color code
-  console.log(val);
   const color = getRGB(val);
-  console.log(color);
   if (color) {
     return `--shadow-color: ${color};`;
   }

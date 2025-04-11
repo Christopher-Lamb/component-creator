@@ -10,6 +10,14 @@ function generateUniqueId(string) {
   return uniqueId;
 }
 
+/**
+ * Takes a string of html and adds custom className based on CSS map
+ * 
+ * @param {string} html
+ * @param {object} classMap
+ * @param {string} listStyleImage => the css url() format
+ * @returns
+ */
 function addClassesToElements(html, classMap, listStyleImage = null) {
   if (typeof html !== "string") return ""; // Ensure valid HTML input
 
@@ -26,7 +34,6 @@ function addClassesToElements(html, classMap, listStyleImage = null) {
       processedClassMap[element] = value;
     }
   });
-
 
   // Iterate over each tag in classMap and apply classes
   Object.entries(processedClassMap).forEach(([tag, className]) => {

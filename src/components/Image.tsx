@@ -1,52 +1,44 @@
-import React, { ImgHTMLAttributes } from "react";
-import { graphql, useStaticQuery } from "gatsby";
-import { GatsbyImage, getImage, IGatsbyImageData, StaticImage } from "gatsby-plugin-image";
+import React from "react";
+import CloudinaryImage from "./CloudinaryImage";
+const { getCSS } = require("../utils/tailwind-to-css/index");
 
-interface ImageNode {
-  relativePath: string;
-  childImageSharp: {
-    gatsbyImageData: IGatsbyImageData;
-  };
-}
-
-interface QueryResult {
-  allFile: {
-    nodes: ImageNode[];
-  };
-}
-
-interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  fileName: string;
+interface ImageProps {
+  img: string;
   alt: string;
+  containerClass: string;
+  wrapperClass: string;
+  imageClass: string;
 }
 
-const Image: React.FC<ImageProps> = ({ className, fileName, alt }) => {
-  // const image = getImage(imageData);
-  const data: QueryResult = useStaticQuery(graphql`
-    query {
-      allFile(filter: { sourceInstanceName: { eq: "images" } }) {
-        nodes {
-          relativePath
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
-          }
-        }
-      }
-    }
-  `);
+/**
+ * Image Component
+ *
+ * @param {ImageProps} props - The props for the component.
+ */
 
-  const imageNode = data.allFile.nodes.find((node) => {
-    return node.relativePath === fileName;
-  });
-  const image = imageNode ? getImage(imageNode.childImageSharp.gatsbyImageData) : null;
-  console.log({ image });
-  return image ? (
-    <GatsbyImage image={image} alt={`Image for ${fileName}`} className={"h-full " + className} />
-  ) : (
-    <StaticImage src={"../images/placeholder.jpeg"} alt={`Placeholder`} className={"h-full " + className} />
-  );
-  // <div className={`w-full h-[${height}px] lg:h-full overflow-hidden flex justify-center`}>{image ? <GatsbyImage image={image} alt={`Image for ${fileName}`} /> : <div>No image found</div>}</div>
+const obj = {
+  image: {
+    type: "image",
+    containerClass: "",
+    wrapperClass: "",
+    imageClass: "",
+    img: "",
+    alt: "",
+  },
 };
 
-//Put an image element for the props for the picture text then add the className on after maybe or just put the full component inside the props of the picture text
+const Image: React.FC<ImageProps> = (props) => {
+  const { img, alt, ...otherCSS } = props;
+  const { cssString, css } = getCSS(otherCSS);
+
+  return (
+    <div className={css["containerClass"]}>
+      <div className={css["wrapperClass"]}>
+        <style type="text/css" dangerouslySetInnerHTML={{ __html: cssString || "" }} />
+        <CloudinaryImage publicId={img} alt={alt} className={css["imageClass"]} />
+      </div>
+    </div>
+  );
+};
+
 export default Image;

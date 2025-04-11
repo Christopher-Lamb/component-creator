@@ -1,8 +1,9 @@
 import React from "react";
 const { getCSS, addClassesToElements } = require("../utils/tailwind-to-css/index");
 
-interface ContentCompProps {
+interface ContentProps {
   htmlContainerClass: string;
+  htmlWrapperClass: string;
   content: string;
   htmlStylesArray: any;
 }
@@ -10,13 +11,22 @@ interface ContentCompProps {
 //  htmlStylesArray: { objects: { el: { elName: "", elClass: "" } }, array: [] },
 
 /**
- * ContentComp Component
+ * Content Component
 
-* @param {ContentCompProps} props - The props for the component.
+* @param {ContentProps} props - The props for the component.
  */
 
+const obj = {
+  content: {
+    type: "content",
+    htmlContainerClass: "",
+    htmlWrapperClass: "",
+    content: "",
+    htmlStylesArray: { objects: { el: { elName: "", elClass: "" } }, array: [] },
+  },
+};
 
-const ContentComp: React.FC<ContentCompProps> = (props) => {
+const Content: React.FC<ContentProps> = (props) => {
   const { content, htmlStylesArray, ...otherCSS } = props;
 
   const { array: htmlStyles } = htmlStylesArray as any;
@@ -44,11 +54,11 @@ const ContentComp: React.FC<ContentCompProps> = (props) => {
   const html = addClassesToElements(content, htmlCSS);
 
   return (
-    <>
+    <div className={css["htmlContainerClass"]}>
       <style type="text/css" dangerouslySetInnerHTML={{ __html: cssStyleString || "" }} />
-      <div dangerouslySetInnerHTML={{ __html: html }}></div>
-    </>
+      <div dangerouslySetInnerHTML={{ __html: html }} className={css["htmlWrapperClass"]} />
+    </div>
   );
 };
 
-export default ContentComp;
+export default Content;

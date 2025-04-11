@@ -3,12 +3,16 @@ import type { HeadFC, PageProps } from "gatsby";
 import * as ComponentDir from "../components/groups";
 import { TiArrowBack } from "react-icons/ti";
 import { ImOmega } from "react-icons/im";
+import { TfiReload } from "react-icons/tfi";
+
 import { TbFishHook } from "react-icons/tb";
+import { getLocalObject, setLocalObject } from "../utils/localStorage";
+import { useDebouncedScrollState } from "../utils/hooks/useDebounceScrollState";
 
 import { allJson } from "../json/json";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { apiPost } from "../utils/api";
-import { GroupEditor, PortalOverlay, OmniCompEditor, HooksEditor } from "../components/app-comps";
+import { GroupEditor, PortalOverlay, OmniCompEditor, HooksEditor, DevWrapper } from "../components/app-comps";
 
 // Define a type for the components
 type ComponentMap = {
@@ -53,9 +57,11 @@ const getCurrentUrlState = (): { [key: string]: string } => {
 };
 
 const IndexPage: FC<PageProps> = () => {
-  const [canScroll, setCanScroll] = useState(false);
-  const [scrollHeight, setScrollHeight] = useState<string>("100px");
+  const { scrollHeight, preScrollHeight, onChange: onScrollChange, isScroll, isPreScroll, toggle } = useDebouncedScrollState();
   const [groupState, setGroupState] = useState<string>("");
+
+  const [reloadKey, setReloadKey] = useState(0);
+  const reloadChild = () => setReloadKey((prev) => prev + 1);
 
   const [isGroupEditor, setIsGroupEditor] = useState(false);
   const [isOmniCompEditor, setIsOmniCompEditor] = useState(false);
@@ -91,6 +97,8 @@ const IndexPage: FC<PageProps> = () => {
     if (urlState.component) {
       setComponentState(urlState.component);
     }
+
+    getLocalObject("settings", { scrollHeight: "300px", preScrollHeight: "300px" });
   }, []);
 
   const handleBack = () => {
@@ -129,14 +137,18 @@ const IndexPage: FC<PageProps> = () => {
     apiPost("add-component", { group: groupState, component: componentState });
   };
 
-  const handleScrollHeight = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setScrollHeight(val);
-  };
+  // const handleScrollHeight = (e: React.ChangeEvent<HTMLInputElement>, state: string) => {
+  //   const val = e.target.value;
+  //   if (state === "pre") {
+  //     setScrollState(val);
+  //   } else if (state === "after") {
+  //     setScrollHeight(val);
+  //   }
+  // };
 
-  const handleClickScrollBtn = (e: React.UIEvent<HTMLButtonElement>) => {
-    setCanScroll((prev) => !prev);
-  };
+  // const handleClickScrollBtn = (e: React.UIEvent<HTMLButtonElement>) => {
+  //   setCanScroll((prev) => !prev);
+  // };
 
   return (
     <main className="relative">
@@ -170,10 +182,10 @@ const IndexPage: FC<PageProps> = () => {
           </button>
         </div>
 
-        <div className="w-full flex justify-around">
+        <div className="w-full flex items-center justify-around">
           <div>
             {groupState && (
-              <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded" onClick={() => setIsGroupEditor(true)}>
+              <button className="px-4 py-2 w-[110px] whitespace-nowrap text-[14px] bg-gray-200 hover:bg-gray-300 rounded" onClick={() => setIsGroupEditor(true)}>
                 Open Group
               </button>
             )}
@@ -181,23 +193,43 @@ const IndexPage: FC<PageProps> = () => {
           <div className="inline mr-24 flex gap-2">
             {componentState && (
               <>
-                <button onDoubleClick={onDeleteComponent} className={`rounded bg-red-100 hover:bg-red-200 text-stone-700 px-4 py-2 transition `}>
+                <button onDoubleClick={onDeleteComponent} className={`rounded w-[150px] text-[14px] whitespace-nowrap bg-red-100 hover:bg-red-200 text-stone-700 px-4 py-2 transition `}>
                   Delete Component
                 </button>
-                <button onDoubleClick={onAddComponent} className={`rounded bg-green-200 hover:bg-green-300 text-stone-700 px-4 py-2 transition `}>
+                <button onDoubleClick={onAddComponent} className={`rounded w-[150px] text-[14px] whitespace-nowrap bg-green-200 hover:bg-green-300 text-stone-700 px-4 py-2 transition `}>
                   Add Component
                 </button>
               </>
             )}
           </div>
           {componentState && (
-            <button className={`border px-4 py-2 transition w-[150px] ${canScroll ? "bg-green-400 font-semibold rounded" : "bg-stone-400 text-stone-700"} `} onClick={handleClickScrollBtn}>
-              <input value={scrollHeight} onChange={handleScrollHeight} className="w-full focus:text-left text-center text-white bg-transparent focus:bg-white focus:text-black" />
-            </button>
+            <div className="flex gap-1 items-center">
+              <button onClick={reloadChild} title="Reload Component" className="rounded-2xl bg-stone-700 hover:bg-stone-500 text-white size-8 flex items-center justify-center hover:scale-110 transition duration-[100ms] ease-linear active:rotate-[-180deg]">
+                <TfiReload />
+              </button>
+              <button className={`border relative px-8 py-2 transition ${isPreScroll ? "bg-green-400 font-semibold rounded" : "bg-stone-400 text-stone-700"} `} onClick={() => toggle("pre")}>
+                <input
+                  value={preScrollHeight}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => onScrollChange({ preScrollHeight: e.target.value })}
+                  className="w-[70px] relative h-full text-center text-white bg-transparent focus:bg-white focus:text-black"
+                />
+              </button>
+              <button className={`border px-8 py-2 transition ${isScroll ? "bg-green-400 font-semibold rounded" : "bg-stone-400 text-stone-700"} `} onClick={() => toggle("post")}>
+                <input
+                  value={scrollHeight}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => onScrollChange({ scrollHeight: e.target.value })}
+                  className="w-[70px] text-center text-white bg-transparent focus:bg-white focus:text-black"
+                />
+              </button>
+            </div>
           )}
         </div>
       </div>
       <div className="flex flex-wrap px-4 max-w-five mx-auto">
+        {isPreScroll && componentState && <div className="w-full" style={{ height: preScrollHeight }}></div>}
+
         {!groupState &&
           Object.keys(components).map((itemName) => {
             return <PageItem key={itemName} name={itemName} onClick={() => handleGroupSelect(itemName as GroupState)} />;
@@ -208,8 +240,8 @@ const IndexPage: FC<PageProps> = () => {
             return <PageItem key={name} name={name} onClick={() => handleComponentSelect(name)} />;
           })}
       </div>
-      {renderComponent()}
-      {canScroll && componentState && <div className="w-full" style={{ height: scrollHeight }}></div>}
+      <DevWrapper reloadTrigger={reloadKey}>{renderComponent()}</DevWrapper>
+      {isScroll && componentState && <div className="w-full" style={{ height: scrollHeight }}></div>}
     </main>
   );
 };

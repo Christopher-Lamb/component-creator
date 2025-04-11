@@ -1,5 +1,5 @@
 import React from "react";
-import { getCSS, Text, ImageLogo, ImageLogoText, Content, Nav, NavCustom } from ".";
+import { getCSS, NavText, ImageLogo, ImageLogoText, NavContent, Nav, NavCustom } from ".";
 
 interface MainNavbarProps {
   routes: any;
@@ -9,7 +9,7 @@ const testProps = {
   mainClass: "",
   containerClass: "",
   wrapperClass: "bg-stone-500 h-20 max-w-[1200px] grid grid-cols-2 mx-auto",
-  leftContainerClass: "h-full px-4",
+  leftContainerClass: "h-full",
   leftArray: {
     objects: {
       text: { type: "text", containerClass: "", textClass: "", text: "" },
@@ -21,16 +21,27 @@ const testProps = {
   rightArray: {
     objects: {
       content: { type: "content", containerClass: "", htmlContainerClass: "", content: "", pClass: "", aClass: "" },
-      nav: { type: "nav", containerClass: "", linkContainerClass: "", linkClass: "", sublinkContainerClass: "h-full flex flex-col", sublinkClass: "", timing: ".1s" },
+      nav: {
+        type: "nav",
+        containerClass: "h-full",
+        navClass: "w-full flex gap-3 h-full items-end",
+        linkClass: "block text-white font-semibold py-1",
+        sublinkContainerClass: "h-full border-b border-x flex flex-col min-w-40",
+        sublinkClass: "pl-1 pb-1 hover:bg-stone-300 px-2",
+        timing: "0.1s",
+      },
       "nav-custom": {
         type: "nav-custom",
-        containerClass: "",
-        linkContainerClass: "",
-        linkClass: "",
-        sublinkContainerClass: "h-full flex flex-col",
-        sublinkClass: "",
-        routesArray: { objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } }, array: [] },
-        timing: ".1s",
+        containerClass: "h-full",
+        navClass: "w-full flex gap-3 h-full items-end",
+        linkClass: "block text-white font-semibold py-1",
+        sublinkContainerClass: "h-full flex flex-col bg-blue-300 min-w-40",
+        sublinkClass: "pl-1 pb-1 hover:bg-stone-300",
+        routesArray: {
+          objects: { route: { name: "", path: "", sublinkArray: { objects: { sublink: { name: "", path: "" } }, array: [] } } },
+          array: [],
+        },
+        timing: ".3s",
       },
     },
     array: [
@@ -87,17 +98,17 @@ const MainNavbar: React.FC<MainNavbarProps> = (props) => {
       <div className={css["containerClass"]}>
         <div className={css["wrapperClass"]}>
           <div className={css["leftContainerClass"]}>
-            {leftElements.map((elProps: any) => {
+            {leftElements.map((elProps: any, i: number) => {
               const { type, ...other } = elProps;
               switch (type) {
                 case "text":
-                  return <Text {...other} />;
+                  return <NavText {...other} key={i} />;
                 case "image":
-                  return <ImageLogo {...other} />;
+                  return <ImageLogo {...other} key={i} />;
                 case "imageText":
-                  return <ImageLogoText {...other} />;
+                  return <ImageLogoText {...other} key={i} />;
                 default:
-                  return <></>;
+                  return;
               }
             })}
           </div>
@@ -106,7 +117,7 @@ const MainNavbar: React.FC<MainNavbarProps> = (props) => {
               const { type, ...other } = elProps;
               switch (type) {
                 case "content":
-                  return <Content {...other} key={i} />;
+                  return <NavContent {...other} key={i} />;
                 case "nav":
                   return <Nav {...{ routes, ...other }} key={i} />;
                 case "nav-custom":
