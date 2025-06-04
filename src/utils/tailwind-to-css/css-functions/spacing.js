@@ -23,13 +23,23 @@ const boxSpacingMap = {
 
 const getBoxSpacing = (arr) => {
   if (arr[0] in boxSpacingMap && arr.length === 2) {
+    console.log("runnit");
     const size = getSize(arr[1]);
     if (size && size !== "auto") {
       return boxSpacingMap[arr[0]](size);
     }
     if (arr[0].startsWith("m") && arr[1] === "auto") {
-
       return boxSpacingMap[arr[0]]("auto");
+    }
+  }
+
+  const val = arr.splice(0, 1);
+  const brackets = arr.join("-");
+
+  if (brackets.startsWith("[") && brackets.endsWith("]")) {
+    const size = getSize(brackets);
+    if (size) {
+      return boxSpacingMap[val](size);
     }
   }
 };

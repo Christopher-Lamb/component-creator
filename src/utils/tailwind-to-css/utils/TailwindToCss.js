@@ -1,4 +1,4 @@
-const { getDimension, getMinMax, getSizeCSS } = require("../css-functions/sizing");
+const { getDimension, getMinMax, getSizeCSS, getSize } = require("../css-functions/sizing");
 const { getText, getFont, getBreak, getWhiteSpace, getLeading, getTracking, getLine } = require("../css-functions/typography");
 const { getCursor, getResize, getScroll, getAccent } = require("../css-functions/interactivity");
 const { getFill, getStroke } = require("../css-functions/svg");
@@ -339,5 +339,4 @@ module.exports = {
   TailwindtoCSS,
 };
 
-// const some = TailwindtoCSS("--spirit-halloween-[20rem]");
-// // console.log(some);
+

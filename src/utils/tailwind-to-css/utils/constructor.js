@@ -101,7 +101,7 @@ const extractClassName = (identityString) => {
 };
 
 //Creates a css string from a tailwind css map
-const getCSS = (classNameObj, isClassName = true) => {
+const getCSS = (classNameObj, isClassName = true, hasUid = true) => {
   const cssObject = {
     none: {},
   };
@@ -208,7 +208,7 @@ const getCSS = (classNameObj, isClassName = true) => {
       const identity = getIdentity({ className, pseudoClass, utilityClass });
       // console.log("\nuid:", identity);
 
-      const uniqueClassName = cssMap[identity].uid;
+      const uniqueClassName = hasUid ? cssMap[identity].uid : identity;
       let workingClassName = selector + uniqueClassName;
       // console.log("uniqueClassName:", uniqueClassName);
       // console.log("workingClassName", workingClassName);
@@ -246,8 +246,9 @@ module.exports = {
 };
 
 // console.clear();
+// console.log("======================================================================")
 // console.log("tailwind-to-css git:(master)");
-// const { cssString: css, css: cssObj } = getCSS({ testClass: "scale-[0.2,0.1]" });
+// const { cssString: css, css: cssObj } = getCSS({ ".testClass h1": "bg-black mt-[-10px]" }, false, false);
 // console.log("________________________________\ncssString");
 // console.log(css);
 // console.log("Css Obj:\n\t", cssObj);

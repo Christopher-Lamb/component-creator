@@ -25,10 +25,10 @@ const Arrows: React.FC<ArrowsProps> = (props) => {
     <div className={css["containerClass"]}>
       <style type="text/css" dangerouslySetInnerHTML={{ __html: cssString || "" }} />
       <div className={css["wrapperClass"]}>
-        <button type="button" className={css["iconButtonClass"]} onClick={onPrevButtonClick}>
+        <button type="button" title="Prev" className={css["iconButtonClass"]} onClick={onPrevButtonClick}>
           <SvgComponent svgString={svg} className={iconPrevClass} />
         </button>
-        <button type="button" className={css["iconButtonClass"]} onClick={onNextButtonClick}>
+        <button type="button" title="Next" className={css["iconButtonClass"]} onClick={onNextButtonClick}>
           <SvgComponent svgString={svg} className={iconNextClass} />
         </button>
       </div>

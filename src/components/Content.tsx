@@ -33,11 +33,14 @@ const Content: React.FC<ContentProps> = (props) => {
 
   //Digest HTML files
   const getHtmlCss = (): { htmlCssString: string; htmlCSS: any } => {
-    const styleObj = htmlStyles.reduce((acc: Record<string, string>, { elName, elClass }: { elName: string; elClass: string }) => {
-      const newName = elName + "Class";
-      acc[newName] = elClass;
-      return acc;
-    }, {});
+    const styleObj = htmlStyles.reduce(
+      (acc: Record<string, string>, { elName, elClass }: { elName: string; elClass: string }) => {
+        const newName = elName + "Class";
+        acc[newName] = elClass;
+        return acc;
+      },
+      {}
+    );
 
     const { cssString, css } = getCSS(styleObj);
 

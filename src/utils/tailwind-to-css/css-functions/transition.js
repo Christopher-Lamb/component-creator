@@ -36,10 +36,22 @@ const easeMap = {
   in: "transition-timing-function: cubic-bezier(0.4, 0, 1, 1);",
   out: "transition-timing-function: cubic-bezier(0, 0, 0.2, 1);",
   "in-out": "transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);",
+  elegant: "transition-timing-function: cubic-bezier(0.45, 0, 0.1, 1);",
 };
 
 const getEase = (arr) => {
   arr.splice(0, 1);
+
+  // check if arr is of length one or ease-{something}
+  if (arr.length === 1) {
+    const regex = /\[(.*?)\]/;
+    const isMatch = arr[0].match(regex);
+    if (isMatch) {
+      const value = isMatch[1].replaceAll("_", "-").replaceAll(",",", ");
+      return `transition-timing-function: ${value};`;
+    }
+  }
+
   const ease = arr.join("-");
   if (ease in easeMap) {
     return easeMap[ease];

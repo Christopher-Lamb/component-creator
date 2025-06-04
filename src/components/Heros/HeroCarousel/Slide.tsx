@@ -1,37 +1,25 @@
 import React from "react";
-import { getCSS, CloudinaryImage, addClassesToElements } from ".";
+import { getCSS, CloudinaryImage, Content } from ".";
 
 interface SlideProps {
+  index: number;
+  currentIndex: number;
+  containerClass: string;
+  wrapperClass: string;
+  imageClass: string;
   img: string;
+  htmlContainerClass: string;
   content: string;
-  htmlStylesArray: string;
+  htmlArray: any;
 }
 
 const Slide: React.FC<SlideProps> = (props) => {
-  const { img, content, htmlStylesArray, ...otherCSS } = props;
+  const { index, currentIndex, img, content, htmlArray, ...otherCSS } = props;
 
   const { cssString, css } = getCSS(otherCSS);
 
   // gonna have to manually change this to parse when in production
-  const { array: htmlStyles } = htmlStylesArray as any;
-
-  //Digest html array
-  const getHtmlCss = (): { htmlCssString: string; htmlCSS: any } => {
-    const styleObj = htmlStyles.reduce((acc: Record<string, string>, { elName, elClass }: { elName: string; elClass: string }) => {
-      const newName = elName + "Class";
-      acc[newName] = elClass;
-      return acc;
-    }, {});
-
-    const { cssString, css } = getCSS(styleObj);
-
-    return {
-      htmlCssString: cssString,
-      htmlCSS: css,
-    };
-  };
-  const { htmlCssString, htmlCSS } = getHtmlCss();
-  const html = addClassesToElements(content, htmlCSS);
+  const { array: contentEls } = htmlArray as any;
 
   return (
     <>
@@ -42,8 +30,26 @@ const Slide: React.FC<SlideProps> = (props) => {
           <CloudinaryImage publicId={img} className={css["imageClass"]} />
         </div>
         <div className={`relative ${css["wrapperClass"]}`}>
-          <style type="text/css" dangerouslySetInnerHTML={{ __html: htmlCssString || "" }} />
-          <div className={css["htmlContainerClass"]} dangerouslySetInnerHTML={{ __html: html }} />
+          {/* <div className={css["htmlContainerClass"]} dangerouslySetInnerHTML={{ __html: html }} /> */}
+          {contentEls.map((elProps: any, i: number) => {
+            const { type, ...other } = elProps;
+            console.log(elProps);
+            switch (type) {
+              case "content":
+                return <Content key={i} {...other} />;
+              case "animated-content":
+                const { animationContainerClass, animationClass, animationOffClass, ...animatedOther } = other;
+                const { cssString: animatedCssString, css: aniCSS } = getCSS({ animationContainerClass, animationClass, animationOffClass });
+                return (
+                  <div key={i} className={`${aniCSS["animationContainerClass"]} ${index === currentIndex ? aniCSS["animationClass"] : aniCSS["animationOffClass"]}`}>
+                    <style type="text/css" dangerouslySetInnerHTML={{ __html: animatedCssString || "" }} />
+                    <Content {...animatedOther} />
+                  </div>
+                );
+              default:
+                return;
+            }
+          })}
         </div>
       </div>
     </>

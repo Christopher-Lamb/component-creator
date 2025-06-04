@@ -21,7 +21,10 @@ const testProps = {
         htmlContainerClass: "",
         htmlWrapperClass: "",
         content: "",
-        htmlStylesArray: { objects: { el: { elName: "", elClass: "" } }, array: [] },
+        htmlStylesArray: {
+          objects: { el: { elName: "", elClass: "" } },
+          array: [],
+        },
       },
       image: {
         type: "image",
@@ -36,12 +39,19 @@ const testProps = {
         htmlContainerClass: "",
         htmlWrapperClass: "",
         content: "",
-        htmlStylesArray: { objects: { el: { elName: "", elClass: "" } }, array: [] },
+        htmlStylesArray: {
+          objects: { el: { elName: "", elClass: "" } },
+          array: [],
+        },
         animationContainerClass: "transition duration-2000 relative",
         animationClass: "translate-x-[0px] opacity-100",
         animationOffClass: "translate-x-[-50%] opacity-10",
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [],
         },
       },
@@ -51,7 +61,11 @@ const testProps = {
         animationClass: "translate-x-[0px] opacity-100",
         animationOffClass: "translate-x-[-50%] opacity-10",
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [],
         },
         imageContainerClass: "",
@@ -68,7 +82,11 @@ const testProps = {
         animationClass: "translate-x-[0px] opacity-100",
         animationOffClass: "translate-x-[-50%] opacity-10",
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [
             { type: "invisible", value: "false" },
             { type: "threshold", value: "0.0" },
@@ -98,7 +116,11 @@ const testProps = {
           ],
         },
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [
             { type: "invisible", value: "false" },
             { type: "threshold", value: "0.2" },
@@ -116,10 +138,13 @@ const testProps = {
         htmlContainerClass: "",
         htmlWrapperClass: "",
         content: "",
-        htmlStylesArray: { objects: { el: { elName: "", elClass: "" } }, array: [] },
+        htmlStylesArray: {
+          objects: { el: { elName: "", elClass: "" } },
+          array: [],
+        },
       },
       image: {
-        type: "type",
+        type: "image",
         containerClass: "",
         wrapperClass: "",
         imageClass: "",
@@ -134,9 +159,16 @@ const testProps = {
         htmlContainerClass: "",
         htmlWrapperClass: "",
         content: "",
-        htmlStylesArray: { objects: { el: { elName: "", elClass: "" } }, array: [] },
+        htmlStylesArray: {
+          objects: { el: { elName: "", elClass: "" } },
+          array: [],
+        },
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [],
         },
       },
@@ -146,7 +178,11 @@ const testProps = {
         animationClass: "translate-x-[0px] opacity-100",
         animationOffClass: "translate-x-[-50%] opacity-10",
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [],
         },
         imageContainerClass: "",
@@ -174,7 +210,11 @@ const testProps = {
           ],
         },
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [
             { type: "invisible", value: "false" },
             { type: "threshold", value: "0.0" },
@@ -188,7 +228,11 @@ const testProps = {
         animationClass: "translate-x-[0px] opacity-100",
         animationOffClass: "translate-x-[50%] opacity-10",
         animationSettingsArray: {
-          objects: { threshold: { type: "threshold", value: "0.5" }, triggerOnce: { type: "triggerOnce", value: "true" }, invisible: { type: "invisible", value: "true" } },
+          objects: {
+            threshold: { type: "threshold", value: "0.5" },
+            triggerOnce: { type: "triggerOnce", value: "true" },
+            invisible: { type: "invisible", value: "true" },
+          },
           array: [
             { type: "invisible", value: "false" },
             { type: "threshold", value: "0.0" },
@@ -216,7 +260,10 @@ const OpPictureText: React.FC<OpPictureTextProps> = (props) => {
 
   return (
     <div className={css["mainClass"]}>
-      <style type="text/css" dangerouslySetInnerHTML={{ __html: cssString || "" }} />
+      <style
+        type="text/css"
+        dangerouslySetInnerHTML={{ __html: cssString || "" }}
+      />
       <div className={css["containerClass"]}>
         <div className={css["wrapperClass"]}>
           <div className={css["leftContainerClass"]}>

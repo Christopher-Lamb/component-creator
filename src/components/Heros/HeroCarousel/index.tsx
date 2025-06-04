@@ -5,3 +5,5 @@ export { default as Dots } from "./Dots";
 export { default as Slide } from "./Slide";
 export { default as Arrows } from "./Arrows";
 export { getCSS, addClassesToElements };
+export { default as Content } from "../../Content";
+export { default as AnimatedContent } from "../../AnimatedContent";

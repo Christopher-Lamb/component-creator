@@ -30,24 +30,24 @@ export const routes = {
       name: "Menu",
       path: "#menu",
       subpaths: [
-        {
-          id: "d060ad54-9631-4c08-baaa-352e6f6ef84c",
-          name: "Page 2 1",
-          path: "/page-2/page-1",
-          subpaths: [],
-        },
-        {
-          id: "a28d0cb2-e502-47ff-97c0-354d684d4eb4",
-          name: "Page 2 2",
-          path: "/page-2/page-2",
-          subpaths: [],
-        },
-        {
-          id: "d8f80210-f73d-423f-8029-e237cb651159",
-          name: "Page 2 3",
-          path: "/page-2/page-3",
-          subpaths: [],
-        },
+        // {
+        //   id: "d060ad54-9631-4c08-baaa-352e6f6ef84c",
+        //   name: "Page 2 1",
+        //   path: "/page-2/page-1",
+        //   subpaths: [],
+        // },
+        // {
+        //   id: "a28d0cb2-e502-47ff-97c0-354d684d4eb4",
+        //   name: "Page 2 2",
+        //   path: "/page-2/page-2",
+        //   subpaths: [],
+        // },
+        // {
+        //   id: "d8f80210-f73d-423f-8029-e237cb651159",
+        //   name: "Page 2 3",
+        //   path: "/page-2/page-3",
+        //   subpaths: [],
+        // },
       ],
     },
     {

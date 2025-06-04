@@ -29,7 +29,9 @@ const Dots: React.FC<DotsProps> = (props) => {
       <div className={css["wrapperClass"]}>
         <div className={css["dotContainerClass"]}>
           {[...Array(slidesLength).keys()].map((i) => {
-            return <button key={i} type="button" onClick={() => onDotButtonClick(i)} className={`${css["dotClass"]} ${dotIndex === i ? css["dotSelectedClass"] : ""}`}></button>;
+            return (
+              <button key={i} title={`Slide ${i + 1}`} type="button" onClick={() => onDotButtonClick(i)} className={`${css["dotClass"]} ${dotIndex === i ? css["dotSelectedClass"] : ""}`}></button>
+            );
           })}
         </div>
       </div>
